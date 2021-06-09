@@ -31,7 +31,7 @@ public class Directory implements Entity {
         return directories;
     }
 
-    public synchronized void addDocument(Document document) throws EntityWithSuchNameAlreadyExistsException {
+    public void addDocument(Document document) throws EntityWithSuchNameAlreadyExistsException {
         if (!DirectoryLogic.entityWithSameNameExists(document, documents)) {
             documents.add(document);
         } else {
@@ -39,11 +39,19 @@ public class Directory implements Entity {
         }
     }
 
-    public synchronized void addDirectory(Directory directory) throws EntityWithSuchNameAlreadyExistsException {
+    public void removeDocument(Document document) {
+        documents.remove(document);
+    }
+
+    public void addDirectory(Directory directory) throws EntityWithSuchNameAlreadyExistsException {
         if (!DirectoryLogic.entityWithSameNameExists(directory, directories)) {
             directories.add(directory);
         } else {
             throw new EntityWithSuchNameAlreadyExistsException(DIRECTORY_EXISTS);
         }
+    }
+
+    public void removeDirectory(Directory directory) {
+        directories.remove(directory);
     }
 }
