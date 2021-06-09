@@ -6,6 +6,7 @@ import entity.Catalog;
 import entity.Document;
 import exception.EntityWithSuchNameAlreadyExistsException;
 
+import java.util.List;
 import java.util.Set;
 
 public class Secretary implements SecretaryController {
@@ -16,7 +17,7 @@ public class Secretary implements SecretaryController {
         this.directoryDatabase = directoryDatabase;
     }
 
-    private static final String DOCUMENT_EXISTS = "Unfortunately, document with such name already exists in directory ";
+    private static final String DOCUMENT_EXISTS = "Unfortunately, document with such name already exists in catalog ";
 
     @Override
     public void addDocumentToCatalog(Document document, Catalog catalog) {
@@ -32,24 +33,41 @@ public class Secretary implements SecretaryController {
 
     @Override
     public Document findDocumentByWriterName(String writerName) {
-        return null;
+        synchronized (directoryDatabase) {
+            List<Catalog> catalogs = directoryDatabase.getListOfAllCatalogs();
+
+            for (Catalog catalog : catalogs) {
+                Set<Document> documents = catalog.getDocuments();
+
+                for (Document document : documents) {
+                    String currentDocumentWriterName = document.getWriterName();
+                    if (currentDocumentWriterName.equals(writerName)) {
+                        return document;
+                    }
+                }
+            }
+
+            return null;
+        }
     }
 
     @Override
     public Document findDocumentByName(String documentName) {
-        Catalog rootCatalog = directoryDatabase.getRootCatalog();
-        Set<Document> rootDirectoryDocuments = rootCatalog.getDocuments();
-        for (Document document : rootDirectoryDocuments) {
-            String currentDocumentName = document.getName();
-            if (currentDocumentName.equals(documentName)) {
-                return document;
+        synchronized (directoryDatabase) {
+            List<Catalog> catalogs = directoryDatabase.getListOfAllCatalogs();
+
+            for (Catalog catalog : catalogs) {
+                Set<Document> documents = catalog.getDocuments();
+
+                for (Document document : documents) {
+                    String currentDocumentName = document.getName();
+                    if (currentDocumentName.equals(documentName)) {
+                        return document;
+                    }
+                }
             }
-        }
 
-        Set<Catalog> directoriesInRoot = rootCatalog.getCatalogs();
-        for (Catalog catalog : directoriesInRoot) {
-
+            return null;
         }
-        return null;
     }
 }
