@@ -1,8 +1,8 @@
 package actor;
 
 import controller.AdministratorController;
-import controller.DirectoryDatabaseModel;
-import entity.Directory;
+import controller.CatalogDatabaseModel;
+import entity.Catalog;
 import entity.Document;
 import exception.EntityWithSuchNameAlreadyExistsException;
 
@@ -10,48 +10,48 @@ import java.util.Set;
 
 public class Administrator implements AdministratorController {
 
-    private final DirectoryDatabaseModel directoryDatabase;
+    private final CatalogDatabaseModel catalogDatabase;
 
-    private static final String DOCUMENT_EXISTS = "Unfortunately, document with such name already exists in directory ";
-    private static final String DIRECTORY_EXISTS = "Unfortunately, directory with such name already exists in directory ";
+    private static final String DOCUMENT_EXISTS = "Unfortunately, document with such name already exists in catalog ";
+    private static final String CATALOG_EXISTS = "Unfortunately, catalog with such name already exists in catalog ";
 
-    public Administrator(DirectoryDatabaseModel directoryDatabase) {
-        this.directoryDatabase = directoryDatabase;
+    public Administrator(CatalogDatabaseModel catalogDatabase) {
+        this.catalogDatabase = catalogDatabase;
     }
 
     @Override
-    public void deleteDocumentInDirectory(Document document, Directory directory) {
-        synchronized (directoryDatabase) {
-            directory.removeDocument(document);
+    public void deleteDocumentInCatalog(Document document, Catalog catalog) {
+        synchronized (catalogDatabase) {
+            catalog.removeDocument(document);
         }
     }
 
     @Override
-    public void createDirectoryInDirectory(String directoryName, Set<Document> documents, Set<Directory> directories,
-                                           Directory locationToCreateDirectory) {
-        Directory createdDirectory = new Directory(directoryName, documents, directories);
-        synchronized (directoryDatabase) {
+    public void createCatalogInCatalog(String catalogName, Set<Document> documents, Set<Catalog> catalogs,
+                                       Catalog locationToCreateCatalog) {
+        Catalog createdCatalog = new Catalog(catalogName, documents, catalogs);
+        synchronized (catalogDatabase) {
             try {
-                locationToCreateDirectory.addDirectory(createdDirectory);
+                locationToCreateCatalog.addCatalog(createdCatalog);
             } catch (EntityWithSuchNameAlreadyExistsException e) {
-                String locationName = locationToCreateDirectory.getName();
-                System.out.println(DIRECTORY_EXISTS + locationName);
+                String locationName = locationToCreateCatalog.getName();
+                System.out.println(CATALOG_EXISTS + locationName);
             }
         }
     }
 
     @Override
-    public void moveDocument(Document documentToMove, Directory fromDirectory, Directory toDirectory) {
-        synchronized (directoryDatabase) {
+    public void moveDocument(Document documentToMove, Catalog fromCatalog, Catalog toCatalog) {
+        synchronized (catalogDatabase) {
             try {
-                toDirectory.addDocument(documentToMove);
+                toCatalog.addDocument(documentToMove);
             } catch (EntityWithSuchNameAlreadyExistsException e) {
-                String locationName = toDirectory.getName();
+                String locationName = toCatalog.getName();
                 System.out.println(DOCUMENT_EXISTS + locationName);
                 return;
             }
 
-            fromDirectory.removeDocument(documentToMove);
+            fromCatalog.removeDocument(documentToMove);
         }
     }
 }

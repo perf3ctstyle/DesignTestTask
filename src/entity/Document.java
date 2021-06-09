@@ -1,6 +1,6 @@
 package entity;
 
-import exception.DocumentWithoutDirectoryException;
+import exception.DocumentWithoutCatalogException;
 
 import java.util.Set;
 
@@ -10,12 +10,12 @@ public class Document implements Entity {
     private final String creationDate;
     private final String writerName;
     private String content;
-    private final Set<Directory> documentLocations;
+    private final Set<Catalog> documentLocations;
 
-    private static final String DOCUMENT_WITHOUT_DIRECTORY = "entity.Document without initial directory";
+    private static final String DOCUMENT_WITHOUT_CATALOG = "Document without initial catalog";
 
-    public Document(String name, String creationDate, String writerName, String content, Set<Directory> documentLocations)
-            throws DocumentWithoutDirectoryException {
+    public Document(String name, String creationDate, String writerName, String content, Set<Catalog> documentLocations)
+            throws DocumentWithoutCatalogException {
         this.name = name;
         this.creationDate = creationDate;
         this.writerName = writerName;
@@ -24,7 +24,7 @@ public class Document implements Entity {
         if (!documentLocations.isEmpty()) {
             this.documentLocations = documentLocations;
         } else {
-            throw new DocumentWithoutDirectoryException(DOCUMENT_WITHOUT_DIRECTORY);
+            throw new DocumentWithoutCatalogException(DOCUMENT_WITHOUT_CATALOG);
         }
     }
 
@@ -52,7 +52,7 @@ public class Document implements Entity {
         return content;
     }
 
-    public Set<Directory> getDocumentLocations() {
+    public Set<Catalog> getDocumentLocations() {
         return documentLocations;
     }
 }

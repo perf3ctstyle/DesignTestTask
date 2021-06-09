@@ -1,12 +1,12 @@
 package controller;
 
-import entity.Directory;
+import entity.Catalog;
 import entity.Document;
-import exception.DocumentWithoutDirectoryException;
+import exception.DocumentWithoutCatalogException;
 
 public interface WriterController {
 
-    Document createDocument(String name, String content, Directory directory) throws DocumentWithoutDirectoryException;
+    Document createDocument(String name, String content, Catalog catalog) throws DocumentWithoutCatalogException;
     void updateDocumentName(Document document, String documentName);
     void updateDocumentContent(Document document, String documentContent);
 }

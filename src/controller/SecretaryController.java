@@ -1,11 +1,11 @@
 package controller;
 
-import entity.Directory;
+import entity.Catalog;
 import entity.Document;
 
 public interface SecretaryController {
 
-    void addDocumentToDirectory(Document document, Directory directory);
+    void addDocumentToCatalog(Document document, Catalog catalog);
     Document findDocumentByWriterName(String writerName);
     Document findDocumentByName(String documentName);
 }

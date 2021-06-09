@@ -4,7 +4,7 @@ import entity.Entity;
 
 import java.util.Set;
 
-public class DirectoryLogic {
+public class CatalogLogic {
 
     public static boolean entityWithSameNameExists(Entity entity, Set<? extends Entity> entitySet) {
         String nameOfEntityToCheck = entity.getName();

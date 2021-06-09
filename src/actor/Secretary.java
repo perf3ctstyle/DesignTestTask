@@ -1,8 +1,8 @@
 package actor;
 
-import controller.DirectoryDatabaseModel;
+import controller.CatalogDatabaseModel;
 import controller.SecretaryController;
-import entity.Directory;
+import entity.Catalog;
 import entity.Document;
 import exception.EntityWithSuchNameAlreadyExistsException;
 
@@ -10,21 +10,21 @@ import java.util.Set;
 
 public class Secretary implements SecretaryController {
 
-    private final DirectoryDatabaseModel directoryDatabase;
+    private final CatalogDatabaseModel directoryDatabase;
 
-    public Secretary(DirectoryDatabaseModel directoryDatabase) {
+    public Secretary(CatalogDatabaseModel directoryDatabase) {
         this.directoryDatabase = directoryDatabase;
     }
 
     private static final String DOCUMENT_EXISTS = "Unfortunately, document with such name already exists in directory ";
 
     @Override
-    public void addDocumentToDirectory(Document document, Directory directory) {
+    public void addDocumentToCatalog(Document document, Catalog catalog) {
         synchronized (directoryDatabase) {
             try {
-                directory.addDocument(document);
+                catalog.addDocument(document);
             } catch (EntityWithSuchNameAlreadyExistsException e) {
-                String directoryName = directory.getName();
+                String directoryName = catalog.getName();
                 System.out.println(DOCUMENT_EXISTS + directoryName);
             }
         }
@@ -37,8 +37,8 @@ public class Secretary implements SecretaryController {
 
     @Override
     public Document findDocumentByName(String documentName) {
-        Directory rootDirectory = directoryDatabase.getRootDirectory();
-        Set<Document> rootDirectoryDocuments = rootDirectory.getDocuments();
+        Catalog rootCatalog = directoryDatabase.getRootCatalog();
+        Set<Document> rootDirectoryDocuments = rootCatalog.getDocuments();
         for (Document document : rootDirectoryDocuments) {
             String currentDocumentName = document.getName();
             if (currentDocumentName.equals(documentName)) {
@@ -46,8 +46,8 @@ public class Secretary implements SecretaryController {
             }
         }
 
-        Set<Directory> directoriesInRoot = rootDirectory.getDirectories();
-        for (Directory directory : directoriesInRoot) {
+        Set<Catalog> directoriesInRoot = rootCatalog.getCatalogs();
+        for (Catalog catalog : directoriesInRoot) {
 
         }
         return null;
