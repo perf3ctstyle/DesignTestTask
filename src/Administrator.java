@@ -2,8 +2,14 @@ import java.util.Set;
 
 public class Administrator implements AdministratorController {
 
+    private final DirectoryDatabaseModel directoryDatabase;
+
     private static final String DOCUMENT_EXISTS = "Unfortunately, document with such name already exists in directory ";
     private static final String DIRECTORY_EXISTS = "Unfortunately, directory with such name already exists in directory ";
+
+    public Administrator(DirectoryDatabaseModel directoryDatabase) {
+        this.directoryDatabase = directoryDatabase;
+    }
 
     @Override
     public void deleteDocumentInDirectory(Document document, Directory directory) {

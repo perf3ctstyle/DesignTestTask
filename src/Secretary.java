@@ -1,6 +1,8 @@
+import java.util.Set;
+
 public class Secretary implements SecretaryController {
 
-    private DirectoryDatabaseModel directoryDatabase;
+    private final DirectoryDatabaseModel directoryDatabase;
 
     public Secretary(DirectoryDatabaseModel directoryDatabase) {
         this.directoryDatabase = directoryDatabase;
@@ -20,12 +22,24 @@ public class Secretary implements SecretaryController {
 
     @Override
     public Document findDocumentByWriterName(String writerName) {
-        Directory rootDirectory = directoryDatabase.getRootDirectory();
         return null;
     }
 
     @Override
-    public Document findDocumentByName(String name) {
+    public Document findDocumentByName(String documentName) {
+        Directory rootDirectory = directoryDatabase.getRootDirectory();
+        Set<Document> rootDirectoryDocuments = rootDirectory.getDocuments();
+        for (Document document : rootDirectoryDocuments) {
+            String currentDocumentName = document.getName();
+            if (currentDocumentName.equals(documentName)) {
+                return document;
+            }
+        }
+
+        Set<Directory> directoriesInRoot = rootDirectory.getDirectories();
+        for (Directory directory : directoriesInRoot) {
+
+        }
         return null;
     }
 }

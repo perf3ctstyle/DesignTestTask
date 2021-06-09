@@ -4,11 +4,13 @@ import java.util.Set;
 public class Writer implements WriterController {
 
     private final String name;
+    private final DirectoryDatabaseModel directoryDatabase;
 
     private static final String CURRENT_DATE = "Don't really know how to implement that, so that is a Mock for Date";
 
-    public Writer(String name) {
+    public Writer(String name, DirectoryDatabaseModel directoryDatabase) {
         this.name = name;
+        this.directoryDatabase = directoryDatabase;
     }
 
     public String getName() {
