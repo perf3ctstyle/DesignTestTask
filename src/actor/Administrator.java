@@ -1,7 +1,7 @@
 package actor;
 
 import controller.AdministratorController;
-import controller.CatalogDatabaseModel;
+import database.CatalogDatabaseModel;
 import entity.Catalog;
 import entity.Document;
 import exception.EntityWithSuchNameAlreadyExistsException;

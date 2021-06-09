@@ -1,6 +1,6 @@
 package actor;
 
-import controller.CatalogDatabaseModel;
+import database.CatalogDatabaseModel;
 import controller.SecretaryController;
 import entity.Catalog;
 import entity.Document;
