@@ -1,3 +1,11 @@
+package actor;
+
+import controller.DirectoryDatabaseModel;
+import controller.SecretaryController;
+import entity.Directory;
+import entity.Document;
+import exception.EntityWithSuchNameAlreadyExistsException;
+
 import java.util.Set;
 
 public class Secretary implements SecretaryController {
@@ -12,11 +20,13 @@ public class Secretary implements SecretaryController {
 
     @Override
     public void addDocumentToDirectory(Document document, Directory directory) {
-        try {
-            directory.addDocument(document);
-        } catch (EntityWithSuchNameAlreadyExistsException e) {
-            String directoryName = directory.getName();
-            System.out.println(DOCUMENT_EXISTS + directoryName);
+        synchronized (directoryDatabase) {
+            try {
+                directory.addDocument(document);
+            } catch (EntityWithSuchNameAlreadyExistsException e) {
+                String directoryName = directory.getName();
+                System.out.println(DOCUMENT_EXISTS + directoryName);
+            }
         }
     }
 

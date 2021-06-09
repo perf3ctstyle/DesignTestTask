@@ -1,3 +1,7 @@
+package logic;
+
+import entity.Entity;
+
 import java.util.Set;
 
 public class DirectoryLogic {

@@ -1,3 +1,9 @@
+package controller;
+
+import entity.Directory;
+import entity.Document;
+import exception.EntityWithSuchNameAlreadyExistsException;
+
 import java.util.Set;
 
 public interface AdministratorController {

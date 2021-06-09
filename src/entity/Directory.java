@@ -1,3 +1,8 @@
+package entity;
+
+import exception.EntityWithSuchNameAlreadyExistsException;
+import logic.DirectoryLogic;
+
 import java.util.Set;
 
 public class Directory implements Entity {
@@ -6,8 +11,8 @@ public class Directory implements Entity {
     private final Set<Document> documents;
     private final Set<Directory> directories;
 
-    private static final String DOCUMENT_EXISTS = "Document with such name already exists in this directory";
-    private static final String DIRECTORY_EXISTS = "Directory with such name already exists in this directory";
+    private static final String DOCUMENT_EXISTS = "entity.Document with such name already exists in this directory";
+    private static final String DIRECTORY_EXISTS = "entity.Directory with such name already exists in this directory";
 
     public Directory(String name, Set<Document> documents, Set<Directory> directories) {
         this.name = name;

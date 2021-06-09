@@ -1,3 +1,7 @@
+package entity;
+
+import exception.DocumentWithoutDirectoryException;
+
 import java.util.Set;
 
 public class Document implements Entity {
@@ -8,7 +12,7 @@ public class Document implements Entity {
     private String content;
     private final Set<Directory> documentLocations;
 
-    private static final String DOCUMENT_WITHOUT_DIRECTORY = "Document without initial directory";
+    private static final String DOCUMENT_WITHOUT_DIRECTORY = "entity.Document without initial directory";
 
     public Document(String name, String creationDate, String writerName, String content, Set<Directory> documentLocations)
             throws DocumentWithoutDirectoryException {
